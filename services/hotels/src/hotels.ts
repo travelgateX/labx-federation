@@ -1,18 +1,17 @@
 const hotels = [
   {
-    id: 1,
+    id: "1",
     name: "",
     rooms: "",
     price: "",
     currency: "",
-    destination: "",
     description: "",
     images: "",
     telephone: 54347475
   }
 ];
 
-export function getOneHotelById(id: number) {
+export function getOneHotelById(id: string) {
   return hotels.find(h => h.id === id);
 }
 

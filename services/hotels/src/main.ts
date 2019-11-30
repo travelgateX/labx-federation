@@ -8,7 +8,7 @@ const typeDefs = gql`
     hotel(id: Int!): Hotel
   }
   type Hotel @key(fields: "id") {
-    id: ID
+    id: ID!
     name: String
     rooms: [Int]
     price: String
