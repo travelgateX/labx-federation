@@ -11,7 +11,11 @@ export async function getOneHotelById(id: string) {
 export async function getAllHotels() {
   const { data, errors } = await this.request();
   if (!errors && data.hotels) {
-    return data.hotels.map(h => ({ ...h, id: String(h.idHotel) }));
+    return data.hotels.map(h => ({
+      ...h,
+      id: String(h.idHotel),
+      price: h.averagePrice
+    }));
   }
   return [];
 }
