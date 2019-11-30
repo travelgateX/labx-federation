@@ -7,10 +7,11 @@ const typeDefs = gql`
   }
   type Gastro @key(fields: "name") {
     name: String!
-    destination: ID!
+  
     menu: [String]
     vegan: Boolean!
   }
+ 
 `;
 
 const resolvers = {
@@ -21,6 +22,7 @@ const resolvers = {
     },
     Gastro: {
       __resolveReference(object) {
+        
         return gastronomy.find(gastros => gastros.name === object.name);
       }
     }
@@ -42,7 +44,7 @@ const resolvers = {
 const gastronomy = [
     {
         name:"pescaito",
-        destination: 1,
+        
         menu:["calamareh", "choco", "puntillitah..."],
         telephone:"53454325",
         vegan: false

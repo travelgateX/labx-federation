@@ -12,7 +12,11 @@ const typeDefs = gql`
     population: Int
     description: String
     hotels: [ID]
-    gastro: [ID]
+    gastro: [Gastro]
+  }
+  extend type Gastro @key(fields: "name") {
+    name: String! @external 
+    destination: Destination
   }
 `;
 
@@ -25,9 +29,25 @@ const resolvers = {
     },
     Destination: {
       __resolveReference(object) {
-        return destinations.find(destionation => destionation.country === object.country && destionation.city === object.city);
+     
+        return destinations.find(destionation => destionation.country === object.country);
+      }
+    },
+    Gastro: {
+      destination(gastro) {
+        var returnValue = null;
+        destinations.forEach(destination => {
+           destination.gastro.forEach(gobject => {
+            if (gobject.name === gastro.name){
+
+              returnValue = destination;
+            }
+          });
+        });
+        return returnValue
       }
     }
+
   };
 
   const server = new ApolloServer({
@@ -51,6 +71,6 @@ const resolvers = {
           population : 800000,
           description : "Isla más grande de las Islas Baleares",
           hotels : [1],
-          gastro : [1]  
+          gastro : [{name:"pescaito"}]  
       }
   ];
