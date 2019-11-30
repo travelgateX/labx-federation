@@ -1,5 +1,11 @@
 const { ApolloServer, gql } = require("apollo-server");
 const { buildFederatedSchema } = require("@apollo/federation");
+const axios = require('axios');
+
+  axios.post('https://api-euwest.graphcms.com/v1/ck3le2a5m2dtk01fj065qcvv7/master', {
+    query:
+      '{gastroes{ gastroId  name  menuDescription  telephone  images}}'
+ }).then((result)=>{console.log(result)});
 
 const typeDefs = gql`
   extend type Query {
