@@ -1,6 +1,6 @@
 const { ApolloServer, gql } = require("apollo-server");
 const { buildFederatedSchema } = require("@apollo/federation");
-
+const axios = require("axios");
 const typeDefs = gql`
   extend type Query {
     destination: Destination
@@ -75,17 +75,47 @@ const server = new ApolloServer({
 });
 
 server.listen({ port: 4001 }).then(({ url }) => {
+  requestGraphCMS();
   console.log(`🚀 Server ready at ${url}`);
 });
 
-const destinations = [
-  {
-    country: "Spain",
-    city: "Mallorca",
-    images: null,
-    population: 800000,
-    description: "Isla más grande de las Islas Baleares",
-    hotels: [{ id: "1" }],
-    gastro: [{ name: "pescaito" }]
-  }
+
+
+function requestGraphCMS(){
+
+  axios.post('https://api-euwest.graphcms.com/v1/ck3ledjmf2eb101fj5gcl1f0d/master', {
+    query: `{
+      destinations{
+        city
+        country
+        images
+        description
+        gastro
+        hotels
+      }}`
+  }).then(function(res) {
+    if ("errors" in res.data){
+      console.log("ERROR")
+
+      console.log(res.data["errors"].toString())
+    }else{
+      
+      var data = res.data.data;
+      data["destinations"].forEach(dest => {
+        destinations.push({
+          city: dest["city"],
+          country: dest["country"],
+          images: dest["images"],
+          description: dest["description"],
+          hotels: dest["hotels"],
+          gastro: dest["gastro"],
+        })
+      });
+    ;
+    }
+  });
+}
+
+var destinations = [
+
 ];

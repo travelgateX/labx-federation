@@ -5,6 +5,7 @@
     },
     "dependencies": {
         "graphql": "*",
+        "axios": "*",
         "apollo-server": "latest",
         "@apollo/federation": "latest"
     }
