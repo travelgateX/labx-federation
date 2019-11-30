@@ -32,7 +32,7 @@ const typeDefs = gql`
     gastro(name: String!): Gastro
   }
   type Gastro @key(fields: "name") {
-    name: String
+    name: String!
     menu: [String]
     vegan: Boolean
   }
