@@ -1,10 +1,11 @@
 import { buildFederatedSchema } from "@apollo/federation";
 import { ApolloServer, gql } from "apollo-server";
+import { getAllHotels, getOneHotelById } from "./hotels";
 
 const typeDefs = gql`
   extend type Query {
     getHotels: [Hotel]
-    getOneHotels: Hotel
+    getOneHotel(id: Int!): Hotel
   }
   type Hotel @key(fields: "id") {
     id: ID
@@ -21,15 +22,15 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     getHotels() {
-      return hotels;
+      return getAllHotels();
     },
-    getOneHotels() {
-      return hotels[0];
+    getOneHotel(_, args) {
+      return getOneHotelById(args.id);
     }
   },
-  User: {
+  Hotel: {
     __resolveReference(object) {
-      return hotels.find(user => user.id === object.id);
+      return getOneHotelById(object.id);
     }
   }
 };
@@ -46,17 +47,3 @@ const server = new ApolloServer({
 server.listen({ port: 4004 }).then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);
 });
-
-const hotels = [
-  {
-    id: 1,
-    name: "",
-    rooms: "",
-    price: "",
-    currency: "",
-    destination: "",
-    description: "",
-    images: "",
-    telephone: 54347475
-  }
-];
