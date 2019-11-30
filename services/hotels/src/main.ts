@@ -4,8 +4,8 @@ import { getAllHotels, getOneHotelById } from "./hotels";
 
 const typeDefs = gql`
   extend type Query {
-    getHotels: [Hotel]
-    getOneHotel(id: Int!): Hotel
+    hotels: [Hotel]
+    hotel(id: Int!): Hotel
   }
   type Hotel @key(fields: "id") {
     id: ID
@@ -21,10 +21,10 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    getHotels() {
+    hotels() {
       return getAllHotels();
     },
-    getOneHotel(_, args) {
+    hotel(_, args) {
       return getOneHotelById(args.id);
     }
   },
