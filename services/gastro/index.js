@@ -2,31 +2,55 @@ const { ApolloServer, gql } = require("apollo-server");
 const { buildFederatedSchema } = require("@apollo/federation");
 const axios = require('axios');
 
-  axios.post('https://api-euwest.graphcms.com/v1/ck3le2a5m2dtk01fj065qcvv7/master', {
+async function request() {
+  const res = await axios.post('https://api-euwest.graphcms.com/v1/ck3le2a5m2dtk01fj065qcvv7/master', {
     query:
       '{gastroes{ gastroId  name  menuDescription  telephone  images}}'
- }).then((result)=>{console.log(result)});
+  })
+  return res.data;
+}
+
+async function allGastros() {
+  const { data, errors } = await request();
+  if (data && !errors)
+    return data.gastroes;
+}
+async function oneGastr(name) {
+  const gastrList = await allGastros();
+  console.log(gastrList)
+  if (gastrList) {
+    return gastrList.find(ga => {
+      console.log(name === ga.name);
+      return name === ga.name;
+    })
+}
+}
 
 const typeDefs = gql`
   extend type Query {
-    gastro: Gastro
+    gastros: [Gastro]
+    gastro(name: String!): Gastro
   }
   type Gastro @key(fields: "name") {
-    name: String!
+    name: String
     menu: [String]
-    vegan: Boolean!
+    vegan: Boolean
   }
 `;
 
 const resolvers = {
   Query: {
-    gastro() {
-      return gastronomy[0];
+   async gastros() {
+      const list =await  allGastros()
+      return list;
+    },
+    async gastro(root,args, context) {
+      return oneGastr(args.name)
     }
   },
   Gastro: {
     __resolveReference(object) {
-      return gastronomy.find(gastros => gastros.name === object.name);
+      return oneGastr(object.name)
     }
   }
 };
@@ -44,11 +68,4 @@ server.listen({ port: 4002 }).then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);
 });
 
-const gastronomy = [
-  {
-    name: "pescaito",
-    menu: ["calamareh", "choco", "puntillitah..."],
-    telephone: "53454325",
-    vegan: false
-  }
-];
+

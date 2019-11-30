@@ -1,12 +1,15 @@
 {
     "name": "destinations",
     "scripts": {
-        "start": "node index.js"
+        "start": "nodemon index.js"
     },
     "dependencies": {
         "@apollo/federation": "latest",
         "apollo-server": "latest",
         "axios": "^0.19.0",
         "graphql": "*"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.1"
     }
 }
