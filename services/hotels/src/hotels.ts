@@ -30,6 +30,7 @@ export async function request(): Promise<{ data?: any[]; errors: any[] }> {
         currency
         images
         telephone
+        description
       }
     }
   `;
