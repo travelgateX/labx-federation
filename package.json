@@ -1,0 +1,31 @@
+{
+  "name": "labx-federation",
+  "version": "1.0.0",
+  "description": "https://slack.com/share/IQT38AV7V/jCmBN4098ml7fPQBbmmOzj28/enQtODQzMTEwMzY5MjY3LWJmOGRhNTg2ZGExMzBiZWNlZGIxNTE2ZTBjNDIxMWYxMGVjODZkMjI5NGIzYzljZGI4YzdmNGUwNjYyODM0ZDY",
+  "main": "index.js",
+  "scripts": {
+    "start:services:dest": "node ./services/destinations/index.js",
+    "start:services:gastro": "node ./services/gastro/index.js",
+    "start:services:hotels": "node ./services/hotels/dist/main.js",
+    "start:services": "concurrently \"npm run start:services:*\"",
+    "start": "node ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/travelgateX/labx-federation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/travelgateX/labx-federation/issues"
+  },
+  "homepage": "https://github.com/travelgateX/labx-federation#readme",
+  "dependencies": {
+    "@apollo/gateway": "^0.11.3",
+    "apollo-server": "^2.9.12"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.0"
+  }
+}
