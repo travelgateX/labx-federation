@@ -1,20 +1,18 @@
 var Redis = require("ioredis");
 var redis = new Redis();
 
-
-function New (){
+function start() {
   new Redis(); // Connect to 127.0.0.1:6379
-;}
+}
 
-async function Get(key){
+async function Get(key) {
   try {
     const result = await redis.get(key);
     console.log(result);
-    return result
+    return result;
   } catch (error) {
-    console.error(error)
-    return null
+    console.error(error);
+    return null;
   }
-} 
-
-function Set(value)
+}
+exports.redis = { Get, start };

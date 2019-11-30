@@ -5,7 +5,7 @@ import { getAllHotels, getOneHotelById } from "./hotels";
 const typeDefs = gql`
   extend type Query {
     hotels: [Hotel]
-    hotel(id: Int!): Hotel
+    hotel(id: ID!): Hotel
   }
   type Hotel @key(fields: "id") {
     id: ID!
