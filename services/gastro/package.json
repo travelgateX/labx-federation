@@ -1,0 +1,11 @@
+{
+    "name": "destinations",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "graphql": "*",
+        "apollo-server": "latest",
+        "@apollo/federation": "latest"
+    }
+}
