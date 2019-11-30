@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/main.js",
   "scripts": {
-    "prestart": "rm -rf ./dist && tsc",
+    "build": "rm -rf ./dist && tsc",
     "start": "node ./dist/main.js",
     "start:dev": "node --inspect ./dist/main.js",
     "start:debug": "./node_modules/nodemon/bin/nodemon.js -e ts --exec \"npm run start\"",

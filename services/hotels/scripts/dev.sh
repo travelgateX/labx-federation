@@ -1,0 +1,1 @@
+cd ./services/hotels && tsc --watch

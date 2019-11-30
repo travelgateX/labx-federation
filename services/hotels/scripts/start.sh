@@ -1,0 +1,1 @@
+cd ./services/hotels && npm run build
